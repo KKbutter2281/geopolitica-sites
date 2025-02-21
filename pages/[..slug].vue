@@ -1,6 +1,6 @@
 <script setup>
-import { useRoute, useHead } from '#imports'
-import { useAsyncData, queryContent } from '@nuxt/content'
+import { useRoute, useHead, useAsyncData } from '#imports'
+import { queryContent } from '#content'
 
 // Get the slug from the URL (it will be an array, e.g. ['teams', 'blackfang'] for /teams/blackfang)
 const route = useRoute()
