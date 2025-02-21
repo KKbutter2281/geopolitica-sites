@@ -1,16 +1,24 @@
 <script setup>
-const route = useRoute();
-const slug = route.params.slug || [];
-const path = Array.isArray(slug) ? `/teams/${slug.join("/")}` : `/teams/${slug}`;
+import { useRoute, useHead } from '#imports'
 
-const { data: page } = await useAsyncData(`team-${slug.join("-")}`, () =>
-  queryContent(path).findOne()
-);
+// Get the slug from the URL (it will be an array, e.g. ['teams', 'blackfang'] for /teams/blackfang)
+const route = useRoute()
+const slug = route.params.slug || []
 
-// Set the page title dynamically
+// Determine the content path:
+// If no slug is provided, assume the homepage (content/index.md)
+// Otherwise, join the slug with "/" to form the path in the content directory.
+const contentPath = slug.length ? `/${slug.join('/')}` : '/index'
+
+// Fetch the content using Nuxt Content
+const { data: page } = await useAsyncData(`page-${slug.join('-')}`, () =>
+  queryContent(contentPath).findOne()
+)
+
+// Set the browser page title based on the content metadata
 useHead({
-  title: page.value?.title || "Faction Not Found",
-});
+  title: page.value?.title || "Page Not Found"
+})
 </script>
 
 <template>
