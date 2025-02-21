@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useHead } from '#imports'
+import { useAsyncData, queryContent } from '@nuxt/content'
 
 // Get the slug from the URL (it will be an array, e.g. ['teams', 'blackfang'] for /teams/blackfang)
 const route = useRoute()
@@ -24,6 +25,7 @@ useHead({
 <template>
   <div v-if="page" :style="{ backgroundColor: page.color, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }">
     <h1>{{ page.title }}</h1>
+    <nuxt-content :document="page" />
   </div>
   <div v-else>
     <h1>Page Not Found</h1>
